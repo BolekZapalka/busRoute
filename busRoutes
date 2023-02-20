@@ -1,0 +1,95 @@
+
+/**
+ * Write a description of class BusRoutes here.
+ *
+ * @author (Radoslaw Rutkowski)
+ * @version (19.02.2023)
+ */
+import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class BusRoutes
+{
+ public HashMap<Integer,ArrayList> routes;
+ private InputReader reader;
+ 
+ /**
+     * Provided method to populate routes with test data
+     */    
+    public void populateRoutes()
+    {
+        ArrayList<String> stops = new ArrayList<>();
+        stops.add("High Street");
+        stops.add("Acacia Avenue");
+        stops.add("Brown Street");
+        stops.add("Broadway");
+        stops.add("Station");
+        routes.put(32, stops);
+        
+        ArrayList<String> stops1 = new ArrayList<>();
+        stops1.add("High Street");
+        stops1.add("Hospital");
+        stops1.add("Brown Street");
+        stops1.add("School");
+        stops1.add("Station");
+        routes.put(13, stops1);
+        
+        ArrayList<String> stops2 = new ArrayList<>();
+        stops2.add("Bank");
+        stops2.add("Hospital");
+        stops2.add("Brown Street");
+        stops2.add("School");
+        stops2.add("Terminus");
+        routes.put(22, stops2);
+    }
+ public BusRoutes(){
+     routes = new HashMap<Integer,ArrayList>();
+     reader = new InputReader();
+     populateRoutes();
+    
+    }
+    public void printRoute(int busNum){
+        System.out.println("Bus number " + busNum +" route" );
+        //ArrayList route = routes.get(busNum);
+        for(Object stop: routes.get(busNum)){
+        System.out.println(stop);
+        
+        }
+    }
+    public void printAllRoutes(){
+    routes.forEach((key,value) -> {
+        System.out.println(key);
+        System.out.println("");
+        for(Object stop: routes.get(key)){
+        System.out.println(stop);
+        System.out.println("");
+        }
+    });
+    }
+    public HashSet<Integer> getBusesStoppingHere(String aStop){
+    HashSet<Integer> getBusesStoppingHere = new HashSet<Integer>();    
+    routes.forEach((key,value) -> {
+        for(Object stop: routes.get(key)){
+        if(stop.equals(aStop)){
+        getBusesStoppingHere.add(key); 
+        }
+        }
+    });
+    return getBusesStoppingHere;    
+    }
+    public HashMap<String, HashSet<Integer>> getStopsAndBusNumbers(){
+      HashMap<String, HashSet<Integer>> getStopsAndBusNumbers = new HashMap<String, HashSet<Integer>>();
+      routes.forEach((key,value) ->{
+          for(Object stop: routes.get(key)){
+           if(!getStopsAndBusNumbers.containsKey(key)){
+            String s = String.valueOf(stop);
+            HashSet<Integer> list = getBusesStoppingHere(s);
+            System.out.println(list);
+            getStopsAndBusNumbers.put(key,list);
+            } 
+        }
+        });
+        return getStopsAndBusNumbers;
+    }
+}
